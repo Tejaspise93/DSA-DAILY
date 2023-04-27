@@ -10,26 +10,30 @@ class Solution {
 public:
     vector<string> findAndReplacePattern(vector<string>& words, string pattern) {
         vector<string> result;
-        for (string word : words) {
-            if (matchPattern(word, pattern)) {
+        for(string word: words){
+            if(domatch(word, pattern)){
                 result.push_back(word);
             }
         }
         return result;
     }
-    bool matchPattern(string word, string pattern) {
-        if (word.length() != pattern.length()) {
+
+    bool domatch(string word, string pattern){
+        if(word.length() != pattern.length()){
             return false;
         }
+
         unordered_map<char, char> wordToPattern;
         unordered_map<char, char> patternToWord;
-        for (int i = 0; i < word.length(); i++) {
+
+        for(int i =0; i< word.length(); i++ ){
             char w = word[i];
             char p = pattern[i];
-            if (wordToPattern.count(w) == 0 && patternToWord.count(p) == 0) {
+            if(wordToPattern.count(w) == 0 && patternToWord.count(p) == 0 ){
                 wordToPattern[w] = p;
                 patternToWord[p] = w;
-            } else if (wordToPattern[w] != p || patternToWord[p] != w) {
+            }
+            else if(wordToPattern[w] != p || patternToWord[p] != w){
                 return false;
             }
         }
