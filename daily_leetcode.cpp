@@ -10,7 +10,8 @@ class Solution {
 public:
     vector<string> findAndReplacePattern(vector<string>& words, string pattern) {
         vector<string> result;
-        for(string word: words){
+
+        for(string word: words){                                        // same as foreach in other languages
             if(domatch(word, pattern)){
                 result.push_back(word);
             }
@@ -19,6 +20,7 @@ public:
     }
 
     bool domatch(string word, string pattern){
+
         if(word.length() != pattern.length()){
             return false;
         }
@@ -30,10 +32,12 @@ public:
             char w = word[i];
             char p = pattern[i];
             if(wordToPattern.count(w) == 0 && patternToWord.count(p) == 0 ){
+                // mapping the letters if both are unmapped
                 wordToPattern[w] = p;
                 patternToWord[p] = w;
             }
             else if(wordToPattern[w] != p || patternToWord[p] != w){
+                // if they are not mapped to same letter
                 return false;
             }
         }
