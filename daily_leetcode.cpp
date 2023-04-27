@@ -8,17 +8,6 @@ using namespace std;
 
 class Solution {
 public:
-    vector<string> findAndReplacePattern(vector<string>& words, string pattern) {
-        vector<string> result;
-
-        for(string word: words){                                        // same as foreach in other languages
-            if(domatch(word, pattern)){
-                result.push_back(word);
-            }
-        }
-        return result;
-    }
-
     bool domatch(string word, string pattern){
 
         if(word.length() != pattern.length()){
@@ -43,4 +32,16 @@ public:
         }
         return true;
     }
+    
+    vector<string> findAndReplacePattern(vector<string>& words, string pattern) {
+        vector<string> result;
+
+        for(string word: words){                                        // same as foreach in other languages
+            if(domatch(word, pattern)){
+                result.push_back(word);
+            }
+        }
+        return result;
+    }
+
 };
