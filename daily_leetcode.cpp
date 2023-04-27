@@ -2,6 +2,22 @@
 using namespace std;
 
 /*
+    unordered_map<char, char> wordToPattern;
+
+    int a[26] = {0}            initialize all values to zero
+
+    find size 
+        string ==>   string.lenght()
+        vector ==>   vector.size()
+        array  ==>   int size = sizeof(arr)/ sizeof(arr[0])
+    
+    
+
+*/
+
+
+
+/*
     890. Find and Replace Pattern
     https://leetcode.com/problems/find-and-replace-pattern/description/
 */
