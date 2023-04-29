@@ -141,7 +141,68 @@ public:
     }
 };
 
-/**/
+/*
+    378. Kth Smallest Element in a Sorted Matrix
+    https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/description/
+*/
+class Solution {
+public:
+    int kthSmallest(vector<vector<int>>& matrix, int k) {
+        int low = matrix[0][0];
+        int size = matrix.size();
+        int high = matrix[size-1][size-1];
+
+        while(low<high){
+            int mid = low + (high - low)/2;
+            int count = 0;
+            
+            // --------- returns the number of small elements than mid element ---------
+            for(int i=0; i<size; i++){
+                count += upper_bound(matrix[i].begin(), matrix[i].end(), mid) - matrix[i].begin();
+            }
+
+            if(count < k){
+                low = mid + 1;
+            }
+            else{
+                high = mid;
+            }
+        }
+        return low;
+    }   
+};
+
+/*
+    729. My Calendar I
+    https://leetcode.com/problems/my-calendar-i/description/
+*/
+
+class MyCalendar {
+public:
+    MyCalendar() {
+        
+    }
+    map <int, int> m;
+    bool book(int start, int end) {
+        m[start]++;
+        m[end]--;
+
+        int sum =0;
+        for(auto elem: m){
+            sum += elem.second;
+            if(sum>1){
+                m[start]--;
+                m[end]++;
+                return false;
+            } 
+        }
+        return true;
+    }
+};
+
+/*
+    
+*/
 
 // --------- ---------
 // --------- ---------
