@@ -2,17 +2,28 @@
 using namespace std;
 
 /*
+    ---------map syntax---------
     unordered_map<char, char> wordToPattern;
 
-    int a[26] = {0}            initialize all values to zero
+    ---------initialize all values to zero---------
+    int a[26] = {0}    
 
-    find size 
+    ---------find size--------- 
         string ==>   string.lenght()
         vector ==>   vector.size()
         array  ==>   int size = sizeof(arr)/ sizeof(arr[0])
     
+    ---------for each in cpp ---------
+    for(string word : words2){
     
+    }
 
+    --------- 2d vector with all values intiziles to zero ---------
+    vector<vector<int>> path(m,vector<int>(n,1))
+
+    --------- ---------
+    --------- ---------
+    --------- ---------
 */
 
 
@@ -61,3 +72,72 @@ public:
     }
 
 };
+
+/*
+    916. Word Subsets
+    https://leetcode.com/problems/word-subsets/description/
+*/
+
+class Solution {
+public:
+    vector<string> wordSubsets(vector<string>& words1, vector<string>& words2) {
+        vector<string> result;
+        int ans[26] = {0};
+        for(string word : words2){
+            int sub[26] ={0};
+            // --------- mapping word ---------
+            for(int i=0; i<word.length(); i++){        
+                sub[word[i] - 'a']++;
+            }
+            // --------- checking the max as we only need to check the maximum occurance of a certain letter ---------
+            for(int i =0; i<26; i++){
+                ans[i] = max(ans[i], sub[i]);
+            }
+        }
+
+        // --------- checking if the pattern is same or not ---------
+        for(string word : words1){
+            int main[26] = {0};
+            for(int i=0; i<word.length(); i++){
+                main[word[i] - 'a']++;
+            }
+            int i;
+            for(i=0; i<26; i++){
+                if(main[i] < ans[i]){
+                    break;
+                }
+            }
+            if(i == 26){
+                result.push_back(word);
+            }
+        }
+        return result;
+    }
+
+};
+
+/*
+    62. Unique Paths
+    https://leetcode.com/problems/unique-paths/description/
+    --------- dynamic programming ---------
+
+*/
+class Solution {
+public:
+    int uniquePaths(int m, int n) {
+        vector<vector<int>> path(m,vector<int>(n,1));
+
+        // --------- we are counting all the possible ways to come to the current block ---------
+        for(int i=1; i<m; i++){
+            for(int j=1; j<n; j++){
+                path[i][j] = path[i-1][j] + path[i][j-1]; 
+            }
+        }
+        // --------- finally we get total number of possible ways to come to the last block ---------
+        return path[m-1][n-1];
+    }
+};
+
+// --------- ---------
+// --------- ---------
+// --------- ---------
