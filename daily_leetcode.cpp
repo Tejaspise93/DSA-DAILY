@@ -21,6 +21,9 @@ using namespace std;
     --------- 2d vector with all values intiziles to zero ---------
     vector<vector<int>> path(m,vector<int>(n,1))
 
+    --------- binary search mid ---------
+    mid = s + (end - s)/2
+
     --------- ---------
     --------- ---------
     --------- ---------
@@ -138,6 +141,10 @@ public:
     }
 };
 
+/**/
+
 // --------- ---------
 // --------- ---------
 // --------- ---------
+
+/**/
