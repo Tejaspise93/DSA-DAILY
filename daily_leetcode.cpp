@@ -24,6 +24,11 @@ using namespace std;
     --------- binary search mid ---------
     mid = s + (end - s)/2
 
+    --------- declare two variables in one line ---------
+    int ext = p, ref = q;
+
+
+
     --------- ---------
     --------- ---------
     --------- ---------
@@ -201,7 +206,7 @@ public:
 };
 
 /*
-    
+
 */
 
 // --------- ---------
