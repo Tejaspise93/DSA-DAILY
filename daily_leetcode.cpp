@@ -295,32 +295,25 @@ public:
 class Solution {
 public:
     bool isPalindrome(int x) {
-        if(x<0){
+        // --------- if x is negative || x is not zero and ends with zero ---------
+        // --------- if it ends with zero it cant be a palindrome ---------
+        if(x<0 || (x!=0 && x%10 == 0)){
             return false;
         }
         if(x%10 == x){
             return true;
         }
-        // --------- to solve where the number is large and the int datatype overlow ---------
-        // --------- uses more space ---------
-        long long real = x;
-        int ans = x;  
-        int count = 0;
+        int real =x;
+        // --------- for cases where INT gets overflowed ---------
+        long long sum = 0;
 
-        // --------- to count number of digit ---------
-        while(real){
-            real = real/10;
-            count++;
-        }
-        
-        // --------- reverse the digit ---------
-        for(int i = count-1; i>=0; i--){
-            int digit = x%10;
-            real += digit * pow(10,i);
+        // --------- reverse a digit ---------
+        while(x){
+            sum = (sum*10) + x%10;
             x = x/10;
         }
-
-        if(ans == real){
+        
+        if(sum == real){
             return true;
         }
        return false; 
