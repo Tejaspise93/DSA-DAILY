@@ -288,8 +288,49 @@ public:
 };
 
 /*
+    9. Palindrome Number
+    https://leetcode.com/problems/palindrome-number/description/
 
 */
+class Solution {
+public:
+    bool isPalindrome(int x) {
+        if(x<0){
+            return false;
+        }
+        if(x%10 == x){
+            return true;
+        }
+        // --------- to solve where the number is large and the int datatype overlow ---------
+        // --------- uses more space ---------
+        long long real = x;
+        int ans = x;  
+        int count = 0;
+
+        // --------- to count number of digit ---------
+        while(real){
+            real = real/10;
+            count++;
+        }
+        
+        // --------- reverse the digit ---------
+        for(int i = count-1; i>=0; i--){
+            int digit = x%10;
+            real += digit * pow(10,i);
+            x = x/10;
+        }
+
+        if(ans == real){
+            return true;
+        }
+       return false; 
+    }
+};
+
+/*
+
+*/
+
 
 // --------- ---------
 // --------- ---------
