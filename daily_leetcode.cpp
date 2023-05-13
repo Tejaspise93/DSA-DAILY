@@ -3,10 +3,10 @@ using namespace std;
 
 /*
     ---------map syntax---------
-    unordered_map<char, char> wordToPattern;
+        unordered_map<char, char> wordToPattern;
 
     ---------initialize all values to zero---------
-    int a[26] = {0}
+        int a[26] = {0}
 
     ---------find size---------
         string ==>   string.lenght()
@@ -14,21 +14,35 @@ using namespace std;
         array  ==>   int size = sizeof(arr)/ sizeof(arr[0])
 
     ---------for each in cpp ---------
-    for(string word : words2){
+        for(string word : words2){
 
-    }
+        }
 
     --------- 2d vector with all values intiziles to zero ---------
-    vector<vector<int>> path(m,vector<int>(n,1))
+        vector<vector<int>> path(m,vector<int>(n,1))
 
     --------- binary search mid ---------
-    mid = s + (end - s)/2
+        mid = s + (end - s)/2
 
     --------- declare two variables in one line ---------
-    int ext = p, ref = q;
+        int ext = p, ref = q;
 
     --------- sorting an vector using func ---------
-    sort(vector.begin(), vector.end());
+        sort(vector.begin(), vector.end());
+
+    --------- vector functions ---------
+        
+        --------- Insert element 6 at position 2 ---------
+        v.insert(v.begin() + 2, 6);
+
+        --------- Insert elements 7, 8, 9 at position 4 ---------
+        v.insert(v.begin() + 4, {7, 8, 9});
+
+        --------- Erase element at position 2 ---------
+        v.erase(v.begin() + 2);
+
+        --------- Erase elements from position 2 to position 4 (exclusive) ---------
+        v.erase(v.begin() + 2, v.begin() + 4);
 
     --------- ---------
     --------- ---------
