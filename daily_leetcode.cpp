@@ -31,7 +31,7 @@ using namespace std;
         sort(vector.begin(), vector.end());
 
     --------- vector functions ---------
-        
+
         --------- Insert element 6 at position 2 ---------
         v.insert(v.begin() + 2, 6);
 
@@ -268,7 +268,7 @@ class Solution
 {
 public:
     ListNode *addTwoNumbers(ListNode *l1, ListNode *l2)
-    {   
+    {
         // ---------making new node and making it the start pointer  ---------
         ListNode *ans = new ListNode();
         // --------- new pointer for opreation ---------
@@ -306,31 +306,37 @@ public:
     https://leetcode.com/problems/palindrome-number/description/
 
 */
-class Solution {
+class Solution
+{
 public:
-    bool isPalindrome(int x) {
+    bool isPalindrome(int x)
+    {
         // --------- if x is negative || x is not zero and ends with zero ---------
         // --------- if it ends with zero it cant be a palindrome ---------
-        if(x<0 || (x!=0 && x%10 == 0)){
+        if (x < 0 || (x != 0 && x % 10 == 0))
+        {
             return false;
         }
-        if(x%10 == x){
+        if (x % 10 == x)
+        {
             return true;
         }
-        int real =x;
+        int real = x;
         // --------- for cases where INT gets overflowed ---------
         long long sum = 0;
 
         // --------- reverse a digit ---------
-        while(x){
-            sum = (sum*10) + x%10;
-            x = x/10;
+        while (x)
+        {
+            sum = (sum * 10) + x % 10;
+            x = x / 10;
         }
-        
-        if(sum == real){
+
+        if (sum == real)
+        {
             return true;
         }
-       return false; 
+        return false;
     }
 };
 
@@ -338,25 +344,90 @@ public:
     Kadane's Algorithm
 */
 
-    int maxsum(vector<int> a){
-        int maxsum =0;
-        int cursum = 0;
-        for(int i=0; i<a.size(); i++){
-            cursum = cursum + a[i];
-            if(cursum > maxsum){
-                maxsum = cursum;
+int maxsum(vector<int> a)
+{
+    int maxsum = 0;
+    int cursum = 0;
+    for (int i = 0; i < a.size(); i++)
+    {
+        cursum = cursum + a[i];
+        if (cursum > maxsum)
+        {
+            maxsum = cursum;
+        }
+        if (cursum < 0)
+        {
+            cursum = 0;
+        }
+    }
+    return maxsum;
+}
+
+/*
+    14. Longest Common Prefix
+    https://leetcode.com/problems/longest-common-prefix/description/?envType=study-plan-v2&id=top-interview-150
+*/
+class Solution
+{
+public:
+    string longestCommonPrefix(vector<string> &strs)
+    {
+        if (strs.size() == 1)
+            return strs[0];
+
+        string ans = "";
+
+        // --------- needs to be done so we can avoid certain test cases ---------
+        sort(strs.begin(), strs.end());
+        int n = strs.size();
+        string first = strs[0], last = strs[n - 1];
+
+        for (int i = 0; i < min(first.length(), last.length()); i++)
+        {
+            if (last[i] != first[i])
+            {
+                return ans;
             }
-            if(cursum < 0 ){
-                cursum = 0;
+            ans += first[i];
+        }
+
+        return ans;
+    }
+};
+
+/*
+    28. Find the Index of the First Occurrence in a String
+    https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/description/?envType=study-plan-v2&id=top-interview-150
+*/
+class Solution
+{
+public:
+    int strStr(string haystack, string needle)
+    {
+        int m = haystack.size(), n = needle.size();
+        for (int i = 0; i <= m - n; i++)
+        {
+            // --------- to use it as a varaiable later ---------
+            int j = 0;
+            for (; j < n; j++)
+            {
+                if (haystack[i + j] != needle[j])
+                {
+                    break;
+                }
+            }
+            if (j == n)
+            {
+                return i;
             }
         }
-        return maxsum;
+        return -1;
     }
+};
 
 /*
 
 */
-
 
 // --------- ---------
 // --------- ---------
