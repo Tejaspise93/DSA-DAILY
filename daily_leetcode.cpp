@@ -335,6 +335,25 @@ public:
 };
 
 /*
+    Kadane's Algorithm
+*/
+
+    int maxsum(vector<int> a){
+        int maxsum =0;
+        int cursum = 0;
+        for(int i=0; i<a.size(); i++){
+            cursum = cursum + a[i];
+            if(cursum > maxsum){
+                maxsum = cursum;
+            }
+            if(cursum < 0 ){
+                cursum = 0;
+            }
+        }
+        return maxsum;
+    }
+
+/*
 
 */
 
