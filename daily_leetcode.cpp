@@ -426,6 +426,119 @@ public:
 };
 
 /*
+    167. Two Sum II - Input Array Is Sorted
+    https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/?envType=study-plan-v2&id=top-interview-150
+
+*/
+class Solution
+{
+public:
+    /*
+      time: o(n) space: o(n)
+    */
+    vector<int> twoSum1(vector<int> &numbers, int target)
+    {
+        // --------- to map the previous elements in the array ---------
+        map<int, int> m;
+        vector<int> ans;
+        for (int i = 0; i < numbers.size(); i++)
+        {
+            // --------- target = num1 + num2   so  num1 = target - num2  ---------
+            int c = target - numbers[i];
+
+            // --------- checking if there is already an element in the array as the array is sorted we know the number will not repeat  ---------
+            if (m[c])
+            {
+                ans.push_back(m[c]);
+                ans.push_back(i + 1);
+            }
+            // --------- after checking its not the ans we push it in the map ---------
+            m[numbers[i]] = i + 1;
+        }
+        return ans;
+    }
+
+    /*
+        time:o(n) space:o(1)
+    */
+    vector<int> twoSum2(vector<int> &numbers, int target)
+    {
+        // --------- two pointer approach ---------
+        vector<int> ans;
+        int s = 0, e = numbers.size() - 1;
+
+        while (s < e)
+        {
+            if ((numbers[s] + numbers[e]) == target)
+            {
+                ans.push_back(s + 1);
+                ans.push_back(e + 1);
+                break;
+            }
+            else if ((numbers[s] + numbers[e]) > target)
+            {
+                e--;
+            }
+            else
+            {
+                s++;
+            }
+        }
+
+        return ans;
+    }
+};
+
+/*
+    11. Container With Most Water
+    https://leetcode.com/problems/container-with-most-water/?envType=study-plan-v2&id=top-interview-150
+
+    time: o(n**2) space:o(1)
+*/
+class Solution
+{
+public:
+    int maxArea1(vector<int> &height)
+    {
+        // --------- we have to find area of the largest rectangle ---------
+        int max = INT_MIN;
+        for (int i = 0; i < height.size(); i++)
+        {
+            for (int j = height.size() - 1; j > i; j--)
+            {
+                int area = min(height[i], height[j]) * (j - i);
+                if (area > max)
+                {
+                    max = area;
+                }
+            }
+        }
+        return max;
+    }
+
+
+    /*
+        time:o(n) space:o(1)
+    */
+
+    int maxArea2(vector<int> &height)
+    {
+        int water = 0;
+        int i = 0, j = height.size() - 1;
+        while (i < j)
+        {
+            int h = min(height[i], height[j]);
+            water = max(water, (j - i) * h);
+            while (height[i] <= h && i < j)
+                i++;
+            while (height[j] <= h && i < j)
+                j--;
+        }
+        return water;
+    }
+};
+
+/*
 
 */
 
