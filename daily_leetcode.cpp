@@ -492,12 +492,13 @@ public:
 /*
     11. Container With Most Water
     https://leetcode.com/problems/container-with-most-water/?envType=study-plan-v2&id=top-interview-150
-
-    time: o(n**2) space:o(1)
 */
 class Solution
 {
 public:
+    /*
+        time:o(n**2) space:o(1)
+    */
     int maxArea1(vector<int> &height)
     {
         // --------- we have to find area of the largest rectangle ---------
@@ -515,7 +516,6 @@ public:
         }
         return max;
     }
-
 
     /*
         time:o(n) space:o(1)
@@ -539,6 +539,202 @@ public:
 };
 
 /*
+    15. 3Sum
+    https://leetcode.com/problems/3sum/description/
+*/
+class Solution
+{
+public:
+    vector<vector<int>> threeSum(vector<int> &nums)
+    {
+        vector<vector<int>> ans;
+        sort(nums.begin(), nums.end());
+
+        for (int i = 0; i < nums.size(); i++)
+        {
+
+            // --------- here ans needs to be  "a+b+c = 0"  so we need to find "b+c = -a" ---------
+            int target = -nums[i];
+
+            // ---------  double pointer---------
+            int front = i + 1;
+            int back = nums.size() - 1;
+
+            while (front < back)
+            {
+                int sum = nums[front] + nums[back];
+
+                if (sum < target)
+                {
+                    front++;
+                }
+                else if (sum > target)
+                {
+                    back--;
+                }
+
+                else
+                {
+                    vector<int> aa = {nums[i], nums[front], nums[back]};
+                    ans.push_back(aa);
+                    // --------- to point it to next front element where its not same as the previous front ---------
+                    while (front < back && nums[front] == aa[1])
+                        front++;
+                    // --------- to point it to next back element where its not same as the previous back ---------
+                    while (front < back && nums[back] == aa[2])
+                        back--;
+                }
+            }
+            // --------- to point it to next first element where its not same as the previous frist ---------
+            while (i + 1 < nums.size() && nums[i + 1] == nums[i])
+                i++;
+        }
+        return ans;
+    }
+};
+
+/*
+    209. Minimum Size Subarray Sum
+    https://leetcode.com/problems/minimum-size-subarray-sum/description/?envType=study-plan-v2&id=top-interview-150
+*/
+
+class Solution
+{
+public:
+    /*
+        time: o(n)
+    */
+    int minSubArrayLen(int target, vector<int> &nums)
+    {
+        int total = 0;
+        int mini = INT_MAX;
+        int last = 0;
+
+        // --------- here 'i' goes forword and last is the leftmost elements ---------
+        for (int i = 0; i < nums.size(); i++)
+        {
+            total += nums[i];
+            while (total >= target)
+            {
+                mini = min(mini, i + 1 - last);
+                total -= nums[last++];
+            }
+        }
+        return (mini == INT_MAX ? 0 : mini);
+    }
+};
+
+/*
+    2. Add Two Numbers
+    https://leetcode.com/problems/add-two-numbers/?envType=study-plan-v2&envId=top-interview-150
+*/
+class Solution
+{
+public:
+    ListNode *addTwoNumbers(ListNode *l1, ListNode *l2)
+    {
+        // --------- created new node to return ---------
+        ListNode *ans = new ListNode();
+        // --------- to carry opration forward ---------
+        ListNode *temp = ans;
+        int carry = 0;
+
+        while (l1 != NULL || l2 != NULL || carry)
+        {
+            int sum = 0;
+            if (l1 != NULL)
+            {
+                sum += l1->val;
+                l1 = l1->next;
+            }
+            if (l2 != NULL)
+            {
+                sum += l2->val;
+                l2 = l2->next;
+            }
+            sum += carry;
+            carry = sum / 10;
+
+            ListNode *nextnode = new ListNode(sum % 10);
+            temp->next = nextnode;
+            temp = temp->next;
+        }
+        return ans->next;
+    }
+};
+
+/*
+    21. Merge Two Sorted Lists
+    https://leetcode.com/problems/merge-two-sorted-lists/?envType=study-plan-v2&envId=top-interview-150
+*/
+class Solution
+{
+public:
+    ListNode *merge(ListNode *first, ListNode *second)
+    {
+
+        ListNode *curr1 = first;
+        ListNode *next1 = curr1->next;
+        ListNode *curr2 = second;
+        ListNode *next2 = curr2->next;
+
+        while (next1 != NULL && curr2 != NULL)
+        {
+            if ((curr2->val >= curr1->val) && (curr2->val <= next1->val))
+            {
+                // --------- inserting the curr2 node in between first ll ---------
+                curr1->next = curr2;
+                next2 = curr2->next;
+
+                curr2->next = next1;
+                // --------- updating the pointers --------- 
+                curr1 = curr2;
+                curr2 = next2;
+            }
+            else
+            {
+                curr1 = next1;
+                next1 = next1->next;
+                if (next1 == NULL)
+                {
+                    curr1->next = curr2;
+                    return first;
+                }
+            }
+        }
+        if (next1 == NULL && curr2 != NULL)
+        {
+            curr1->next = curr2;
+        }
+
+        return first;
+    }
+
+    ListNode *mergeTwoLists(ListNode *list1, ListNode *list2)
+    {
+        if (list1 == NULL)
+            return list2;
+
+        if (list2 == NULL)
+            return list1;
+
+        int l1 = list1->val;
+        int l2 = list2->val;
+
+        // --------- so the first array always have the smallest value --------- 
+        if (l2 >= l1)
+        {
+            return merge(list1, list2);
+        }
+        else
+        {
+            return merge(list2, list1);
+        }
+    }
+};
+
+
+/*
 
 */
 
@@ -546,4 +742,6 @@ public:
 // --------- ---------
 // --------- ---------
 
-/**/
+/*
+
+*/
