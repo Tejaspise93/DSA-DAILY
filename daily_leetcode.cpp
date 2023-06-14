@@ -50,6 +50,7 @@ using namespace std;
 */
 
 /*
+    1.
     890. Find and Replace Pattern
     https://leetcode.com/problems/find-and-replace-pattern/description/
 */
@@ -103,6 +104,7 @@ public:
 };
 
 /*
+    2.
     916. Word Subsets
     https://leetcode.com/problems/word-subsets/description/
 */
@@ -155,6 +157,7 @@ public:
 };
 
 /*
+    3.
     62. Unique Paths
     https://leetcode.com/problems/unique-paths/description/
     --------- dynamic programming ---------
@@ -181,6 +184,7 @@ public:
 };
 
 /*
+    4.
     378. Kth Smallest Element in a Sorted Matrix
     https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/description/
 */
@@ -218,6 +222,7 @@ public:
 };
 
 /*
+    5.
     729. My Calendar I
     https://leetcode.com/problems/my-calendar-i/description/
 */
@@ -250,6 +255,7 @@ public:
 };
 
 /*
+    6.
     2. Add Two Numbers
     https://leetcode.com/problems/add-two-numbers/description/
 */
@@ -302,6 +308,7 @@ public:
 };
 
 /*
+    7.
     9. Palindrome Number
     https://leetcode.com/problems/palindrome-number/description/
 
@@ -364,6 +371,7 @@ int maxsum(vector<int> a)
 }
 
 /*
+    8.
     14. Longest Common Prefix
     https://leetcode.com/problems/longest-common-prefix/description/?envType=study-plan-v2&id=top-interview-150
 */
@@ -396,6 +404,7 @@ public:
 };
 
 /*
+    9.
     28. Find the Index of the First Occurrence in a String
     https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/description/?envType=study-plan-v2&id=top-interview-150
 */
@@ -426,6 +435,7 @@ public:
 };
 
 /*
+    10.
     167. Two Sum II - Input Array Is Sorted
     https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/?envType=study-plan-v2&id=top-interview-150
 
@@ -490,6 +500,7 @@ public:
 };
 
 /*
+    11.
     11. Container With Most Water
     https://leetcode.com/problems/container-with-most-water/?envType=study-plan-v2&id=top-interview-150
 */
@@ -539,6 +550,7 @@ public:
 };
 
 /*
+    12.
     15. 3Sum
     https://leetcode.com/problems/3sum/description/
 */
@@ -594,6 +606,7 @@ public:
 };
 
 /*
+    13.
     209. Minimum Size Subarray Sum
     https://leetcode.com/problems/minimum-size-subarray-sum/description/?envType=study-plan-v2&id=top-interview-150
 */
@@ -625,6 +638,7 @@ public:
 };
 
 /*
+    14.
     2. Add Two Numbers
     https://leetcode.com/problems/add-two-numbers/?envType=study-plan-v2&envId=top-interview-150
 */
@@ -664,6 +678,7 @@ public:
 };
 
 /*
+    15.
     21. Merge Two Sorted Lists
     https://leetcode.com/problems/merge-two-sorted-lists/?envType=study-plan-v2&envId=top-interview-150
 */
@@ -687,7 +702,7 @@ public:
                 next2 = curr2->next;
 
                 curr2->next = next1;
-                // --------- updating the pointers --------- 
+                // --------- updating the pointers ---------
                 curr1 = curr2;
                 curr2 = next2;
             }
@@ -721,7 +736,7 @@ public:
         int l1 = list1->val;
         int l2 = list2->val;
 
-        // --------- so the first array always have the smallest value --------- 
+        // --------- so the first array always have the smallest value ---------
         if (l2 >= l1)
         {
             return merge(list1, list2);
@@ -733,6 +748,80 @@ public:
     }
 };
 
+/*
+    16.
+    138. Copy List with Random Pointer
+    https://leetcode.com/problems/copy-list-with-random-pointer/?envType=study-plan-v2&envId=top-interview-150
+*/
+class Node {
+public:
+    int val;
+    Node* next;
+    Node* random;
+    
+    Node(int _val) {
+        val = _val;
+        next = NULL;
+        random = NULL;
+    }
+};
+class Solution
+{
+private:
+    void insertAtTail(Node *&head, Node *&tail, int data)
+    {
+        Node *newNode = new Node(data);
+        if (head == NULL)
+        {
+            head = newNode;
+            tail = newNode;
+            return;
+        }
+        else
+        {
+            tail->next = newNode;
+            tail = newNode;
+            return;
+        }
+    }
+
+public:
+    Node *copyRandomList(Node *head)
+    {
+        Node *cloneHead = NULL;
+        Node *cloneTail = NULL;
+
+        Node *temp = head;
+        while (temp != NULL)
+        {
+            insertAtTail(cloneHead, cloneTail, temp->val);
+            temp = temp->next;
+        }
+
+        // --------- to map the nodes of old with new ---------
+        unordered_map<Node *, Node *> oldToNew;
+
+        Node *originalNode = head;
+        Node *copyNode = cloneHead;
+        while (originalNode != NULL)
+        {
+            oldToNew[originalNode] = copyNode;
+            originalNode = originalNode->next;
+            copyNode = copyNode->next;
+        }
+
+        originalNode = head;
+        copyNode = cloneHead;
+        // --------- to point the randoms acc to map ---------
+        while (originalNode != NULL)
+        {
+            copyNode->random = oldToNew[originalNode->random];
+            originalNode = originalNode->next;
+            copyNode = copyNode->next;
+        }
+        return cloneHead;
+    }
+};
 
 /*
 
