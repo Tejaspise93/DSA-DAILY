@@ -753,13 +753,15 @@ public:
     138. Copy List with Random Pointer
     https://leetcode.com/problems/copy-list-with-random-pointer/?envType=study-plan-v2&envId=top-interview-150
 */
-class Node {
+class Node
+{
 public:
     int val;
-    Node* next;
-    Node* random;
-    
-    Node(int _val) {
+    Node *next;
+    Node *random;
+
+    Node(int _val)
+    {
         val = _val;
         next = NULL;
         random = NULL;
@@ -820,6 +822,181 @@ public:
             copyNode = copyNode->next;
         }
         return cloneHead;
+    }
+};
+
+/*
+    17.
+    19. Remove Nth Node From End of List
+    https://leetcode.com/problems/remove-nth-node-from-end-of-list/description/?envType=study-plan-v2&envId=top-interview-150
+*/
+class Solution
+{
+public:
+    ListNode *removeNthFromEnd(ListNode *head, int n)
+    {
+        ListNode *slow = head;
+        ListNode *fast = head;
+
+        while (n--)
+        {
+            fast = fast->next;
+        }
+
+        if (fast == nullptr)
+            return head->next;
+
+        while (fast->next != nullptr)
+        {
+            fast = fast->next;
+            slow = slow->next;
+        }
+
+        slow->next = slow->next->next;
+
+        return head;
+    }
+};
+
+/*
+    206. Reverse Linked List
+    https://leetcode.com/problems/reverse-linked-list/
+*/
+class Solution
+{
+public:
+    ListNode *reverseList(ListNode *head)
+    {
+        ListNode *curr = head;
+        ListNode *prev = nullptr;
+        while (curr != nullptr)
+        {
+            ListNode *temp = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = temp;
+        }
+        return prev;
+    }
+};
+
+/*
+    876. Middle of the Linked List
+    https://leetcode.com/problems/middle-of-the-linked-list/description/
+*/
+class Solution
+{
+public:
+    ListNode *middleNode(ListNode *head)
+    {
+        ListNode *slow = head;
+        ListNode *fast = head;
+        while (fast)
+        {
+            fast = fast->next;
+            // --------- to check if fast is at the last node if yes then return slow or increment it ---------
+            if (fast)
+            {
+                fast = fast->next;
+            }
+            else
+            {
+                return slow;
+            }
+            slow = slow->next;
+        }
+        return slow;
+    }
+};
+
+/*
+    83. Remove Duplicates from Sorted List
+    https://leetcode.com/problems/remove-duplicates-from-sorted-list/description/
+*/
+class Solution
+{
+public:
+    ListNode *deleteDuplicates(ListNode *head)
+    {
+        if (head == nullptr)
+            return head;
+        if (head->next == nullptr)
+            return head;
+        ListNode *curr = head;
+        ListNode *fow = curr->next;
+        while (fow)
+        {
+            if (curr->val == fow->val)
+            {
+                fow = fow->next;
+                curr->next = curr->next->next;
+            }
+            else
+            {
+                fow = fow->next;
+                curr = curr->next;
+            }
+        }
+        return head;
+    }
+};
+
+/*
+    82. Remove Duplicates from Sorted List II
+    https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/description/
+*/
+class Solution
+{
+public:
+    ListNode *deleteDuplicates(ListNode *head)
+    {
+        if (head == nullptr || head->next == nullptr)
+            return head;
+
+        ListNode *temp = head;
+        unordered_map<int, int> ocurred;
+        while (temp)
+        {
+            ocurred[temp->val]++;
+            temp = temp->next;
+        }
+
+        // --------- to point the head at first the non repeating node  ---------
+        temp = head;
+        while (temp)
+        {
+            if (ocurred[temp->val] == 1)
+            {
+                head = temp;
+                break;
+            }
+            temp = temp->next;
+
+            // --------- for edge case where all the nodes are repeted  ---------
+            if (temp == nullptr)
+            {
+                return nullptr;
+            }
+        }
+
+        ListNode *prev = head;
+        temp = head->next;
+
+        while (temp)
+        {
+            if (ocurred[temp->val] == 1)
+            {
+                prev = temp;
+                temp = temp->next;
+            }
+            else
+            {
+                temp = temp->next;
+                prev->next = temp;
+            }
+        }
+
+        return head;
     }
 };
 
