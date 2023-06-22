@@ -5,6 +5,23 @@ using namespace std;
     ---------map syntax---------
         unordered_map<char, char> wordToPattern;
 
+        iterator for a map
+        map<char,char> m;
+        map<char, char> :: iterator it = m.begin();
+
+        while(it != m.end()){
+            cout<< it->first << " "<< it->second <<endl;
+            it++;
+        }
+
+        this will print the whole map in the same order as inserted (given its a map not an unordered map)
+
+        for(auto i: m){
+            cout<<i->first << " "<< i->second<<endl;
+        }                               // for each in a map
+        }                               // for each in a map
+
+
     ---------initialize all values to zero---------
         int a[26] = {0}
 
@@ -1000,6 +1017,127 @@ public:
     }
 };
 
+/*
+    86. Partition List
+    https://leetcode.com/problems/partition-list/description/
+*/
+class Solution
+{
+public:
+    ListNode *partition(ListNode *head, int x)
+    {
+        ListNode *small = new ListNode(-1);
+        ListNode *large = new ListNode(-1);
+        ListNode *small_head = small;
+        ListNode *large_head = large;
+        while (head)
+        {
+            if (head->val < x)
+            {
+                small->next = head;
+                small = small->next;
+                head = head->next;
+                small->next = NULL;
+            }
+            else
+            {
+                large->next = head;
+                large = large->next;
+                head = head->next;
+                large->next = NULL;
+            }
+        }
+        small->next = large_head->next;
+        return small_head->next;
+    }
+};
+
+/*
+    205. Isomorphic Strings
+    https://leetcode.com/problems/isomorphic-strings/description/?envType=study-plan-v2&envId=top-interview-150
+*/
+class Solution
+{
+public:
+    bool isIsomorphic(string s, string t)
+    {
+        if (s.length() != t.length())
+            return false;
+        unordered_map<char, char> letters;
+        unordered_map<char, bool> used;
+
+        for (int i = 0; i < s.length(); i++)
+        {
+            if ((!letters[s[i]]) && (!used[t[i]]))
+            {
+                letters[s[i]] = t[i];
+                used[t[i]] = true;
+            }
+            else if ((!letters[s[i]]) && used[t[i]])
+            {
+                return false;
+            }
+            else if ((letters[s[i]]) && (t[i] != letters[s[i]]))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+};
+
+/*
+    100. Same Tree
+    https://leetcode.com/problems/same-tree/description/?envType=study-plan-v2&envId=top-interview-150
+
+*/
+struct TreeNode
+{
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode() : val(0), left(nullptr), right(nullptr) {}
+    TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+    TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+};
+
+class Solution
+{
+public:
+    bool isSameTree(TreeNode *p, TreeNode *q)
+    {
+        // --------- base cases ---------
+        if (p == nullptr && q == nullptr)
+            return true;
+        if (p == nullptr || q == nullptr)
+            return false;
+
+        if (q->val != p->val)
+            return false;
+        // --------- recurvise call ---------
+        return isSameTree(p->left, q->left) && isSameTree(p->right, q->right);
+    }
+};
+
+/*
+    226. Invert Binary Tree
+    https://leetcode.com/problems/invert-binary-tree/description/?envType=study-plan-v2&envId=top-interview-150
+*/
+class Solution
+{
+public:
+    TreeNode *invertTree(TreeNode *root)
+    {
+        if (root)
+        {
+            invertTree(root->left);
+            invertTree(root->right);
+            std::swap(root->left, root->right);
+        }
+
+        return root;
+    }
+};
 /*
 
 */
