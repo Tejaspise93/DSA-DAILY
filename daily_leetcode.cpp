@@ -1139,6 +1139,83 @@ public:
     }
 };
 /*
+    543. Diameter of Binary Tree
+    https://leetcode.com/problems/diameter-of-binary-tree/description/
+*/
+class Solution
+{
+private:
+    int diameter = 0;
+    int heightOfBinaryTree(TreeNode *root)
+    {
+        if (root == nullptr)
+            return 0;
+        int left = heightOfBinaryTree(root->left);
+        int right = heightOfBinaryTree(root->right);
+
+        diameter = max(left + right, diameter);
+        return max(left, right) + 1;
+    }
+
+public:
+    int diameterOfBinaryTree(TreeNode *root)
+    {
+        heightOfBinaryTree(root);
+        return diameter;
+    }
+};
+
+/*
+    22. Generate Parentheses
+    https://leetcode.com/problems/generate-parentheses/description/
+*/
+class Solution
+{
+public:
+    vector<string> result;
+    
+    void helper(int open, int close, int n, string curr)
+    {
+        if (curr.length() == n * 2)
+        {
+            result.push_back(curr);
+            return;
+        }
+        if (open < n)
+            helper(open + 1, close, n, curr + "(");
+        if (close < open)
+            helper(open, close + 1, n, curr + ")");
+    }
+    vector<string> generateParenthesis(int n)
+    {
+        helper(0, 0, n, "");
+        return result;
+    }
+};
+
+/*
+    1108. Defanging an IP Address
+    https://leetcode.com/problems/defanging-an-ip-address/
+*/
+class Solution {
+public:
+    string defangIPaddr(string add) {
+        string str = "[.]";
+        for(int i=0; i<add.length(); i++){
+            if(add[i] == '.'){
+                add.replace(i,1,str);
+                i+=2;
+            }
+        }
+        return add;
+    }
+};
+
+/*
+
+*/
+
+/*
 
 */
 
